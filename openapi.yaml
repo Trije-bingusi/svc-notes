@@ -1,0 +1,92 @@
+openapi: 3.0.3
+info:
+  title: Notes Service
+  version: 1.0.0
+servers:
+  - url: /
+paths:
+  /healthz:
+    get:
+      summary: Liveness probe
+      responses:
+        "200":
+          description: OK
+  /readyz:
+    get:
+      summary: Readiness probe
+      responses:
+        "200":
+          description: READY
+        "500":
+          description: NOT READY
+  /api/lectures/{lectureId}/notes:
+    get:
+      summary: List notes for a lecture
+      parameters:
+        - in: path
+          name: lectureId
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Notes
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Note"
+    post:
+      summary: Create note for a lecture
+      parameters:
+        - in: path
+          name: lectureId
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [content]
+              properties:
+                user_id:
+                  type: string
+                  format: uuid
+                  nullable: true
+                content:
+                  type: string
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Note"
+        "400":
+          description: Validation error
+components:
+  schemas:
+    Note:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        lecture_id:
+          type: string
+          format: uuid
+        user_id:
+          type: string
+          format: uuid
+          nullable: true
+        content:
+          type: string
+        created_at:
+          type: string
+          format: date-time
