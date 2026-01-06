@@ -39,10 +39,10 @@ ingress:
   hosts:
     - paths:
         # API endpoints
-        - path: /api/notes/
+        - path: /api/lectures/
           pathType: Prefix
         # Documentation endpoint
-        - path: /docs/notes/
+        - path: /docs/lectures/
           pathType: Prefix
 
 # Health check probes configuration
