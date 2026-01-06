@@ -1,0 +1,7 @@
+apiVersion: v2
+name: svc-notes
+description: Service for managing notes
+
+type: application
+version: 0.1.0
+appVersion: "vX.Y.Z"  # Overriden in CI/CD pipeline
