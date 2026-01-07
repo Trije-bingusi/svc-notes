@@ -32,18 +32,14 @@ service:
   type: ClusterIP
   port: 80
 
-# Ingress configuration for external access
+# Service should not be directly exposed through Ingress, but through API Gateway
 ingress:
-  enabled: true
+  enabled: false
+  defaultHost: ""
   className: nginx
-  hosts:
-    - paths:
-        # API endpoints
-        - path: /api/lectures/
-          pathType: Prefix
-        # Documentation endpoint
-        - path: /docs/lectures/
-          pathType: Prefix
+  tls:
+    enabled: false
+    secretName: nip-tls
 
 # Health check probes configuration
 probes:
